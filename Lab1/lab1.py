@@ -1,3 +1,5 @@
+import time
+
 class Stack:
     class Node:
         def __init__(self, data):
@@ -47,6 +49,7 @@ def SimpleNaive(stack1, stack2):
         stack1.push(temp)
 
 def printStack(stack):
+    # Print out the stack
     elements = []
     current = stack.head
     while current:
@@ -55,6 +58,7 @@ def printStack(stack):
     print(" -> ".join(map(str, elements)))
         
 def countStack(stack):
+    # Count the elements in the stack
     current = stack.head
     n = 0
     while current:
@@ -78,10 +82,14 @@ def main():
     stack1.push(565)
     stack1.push(10)
     
+    start_time = time.time() 
     for i in range(countStack(stack1)):
         SimpleNaive(stack1, stack2)
         print("Stack2 after sorting:", i)
         printStack(stack1)
-    
+        printStack(stack2)
+    end_time = time.time() 
+    execution_time = end_time - start_time 
+    print(f"Execution time: {execution_time} seconds") 
 if __name__ == "__main__":
     main()
