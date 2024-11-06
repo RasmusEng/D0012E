@@ -1,5 +1,5 @@
 import time
-
+import random
 class Stack:
     class Node:
         def __init__(self, data):
@@ -30,7 +30,7 @@ class Stack:
     
 def SimpleNaive(stack1, stack2):
     if stack1.isEmpty():
-        return stack2
+        return stack1
     
     pushed = 0
     bog = stack1.pop()
@@ -71,24 +71,17 @@ def main():
     stack2 = Stack()
     
     # Add elements to stack1
-    stack1.push(1)
-    stack1.push(1321)
-    stack1.push(3)
-    stack1.push(8)
-    stack1.push(4)
-    stack1.push(5)
-    stack1.push(52)
-    stack1.push(565)
-    stack1.push(565)
-    stack1.push(10)
+
+    for i in range(0, 100):
+        stack1.push(random.randint(1,10000))
+    
     
     start_time = time.time() 
+    printStack(stack1)
     for i in range(countStack(stack1)):
         SimpleNaive(stack1, stack2)
-        print("Stack2 after sorting:", i)
-        printStack(stack1)
-        printStack(stack2)
     end_time = time.time() 
+    printStack(stack1) 
     execution_time = end_time - start_time 
     print(f"Execution time: {execution_time} seconds") 
 if __name__ == "__main__":
