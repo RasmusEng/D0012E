@@ -47,15 +47,6 @@ def SimpleNaive(stack1, stack2):
     for i in range(pushed):
         temp = stack2.pop()
         stack1.push(temp)
-
-def printStack(stack):
-    # Print out the stack
-    elements = []
-    current = stack.head
-    while current:
-        elements.append(current.data)
-        current = current.next
-    print(" -> ".join(map(str, elements)))
         
 def countStack(stack):
     # Count the elements in the stack
@@ -66,23 +57,53 @@ def countStack(stack):
         n += 1
     return n
 
+def startSort(stack1, stack2):
+    # Start the sorting
+    for i in range(countStack(stack1)):
+        SimpleNaive(stack1, stack2)
+        
+def printStack(stack):
+    # Print out the stack
+    elements = []
+    current = stack.head
+    while current:
+        elements.append(current.data)
+        current = current.next
+    print(" -> ".join(map(str, elements)))
+    print("-"*100)
+        
+def testStack(stack):
+    # Test if the stack is sorted
+    elements = []
+    current = stack.head
+    while current:
+        elements.append(current.data)
+        current = current.next
+    if elements == sorted(elements):
+        return True
+    return False
+
 def main():
     stack1 = Stack()
     stack2 = Stack()
     
     # Add elements to stack1
-
     for i in range(0, 100):
         stack1.push(random.randint(1,10000))
     
+    printStack(stack1)
     
     start_time = time.time() 
-    printStack(stack1)
-    for i in range(countStack(stack1)):
-        SimpleNaive(stack1, stack2)
-    end_time = time.time() 
+    startSort(stack1, stack2)
+    end_time = time.time()
+    
     printStack(stack1) 
+    
+    print(testStack(stack1))
+    
     execution_time = end_time - start_time 
     print(f"Execution time: {execution_time} seconds") 
+
+
 if __name__ == "__main__":
     main()
