@@ -84,12 +84,13 @@ def testStack(stack):
     return False
 
 def main():
+    # Just for testing
     stack1 = Stack()
     stack2 = Stack()
     
     # Add elements to stack1
-    for i in range(0, 100):
-        stack1.push(random.randint(1,10000))
+    for i in range(0, 10000):
+        stack1.push(random.randint(1,100000))
     
     printStack(stack1)
     
