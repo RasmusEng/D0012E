@@ -5,6 +5,7 @@ class Stack:
         def __init__(self, data):
             self.data = data
             self.next = None
+            self.prev = None
         
     def __init__(self):
         # Constructor for the stack, creates the head of the stack
@@ -27,6 +28,8 @@ class Stack:
     def isEmpty(self):
         # Return true if stack is empty
         return self.head is None
+    
+
     
 def SimpleNaive(stack1, stack2):
     # Sorts elements from stack1 into stack2 in ascending order
@@ -88,7 +91,7 @@ def main():
     
     # Add elements to stack1
     for i in range(0, 10000):
-        stack1.push(random.randint(1,100000))
+        stack1.push(random.randint(1,100))
     
     printStack(stack1)
     

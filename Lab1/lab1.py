@@ -90,7 +90,7 @@ def main():
     
     # Add elements to stack1
     for i in range(0, 10000):
-        stack1.push(random.randint(1,100000))
+        stack1.push(random.randint(1,100))
     
     printStack(stack1)
     
