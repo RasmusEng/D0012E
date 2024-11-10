@@ -20,7 +20,7 @@ def checkSorting(stack: Stack):
     while current:
         elements.append(current.data)
         current = current.next
-    if elements == sorted(elements, reverse=True):
+    if elements == sorted(elements):
         return "The stack is sorted"
     return "The stack is NOT sorted"
 
@@ -32,8 +32,8 @@ def runTest(stack1, stack2):
     bestSolution.SimpleNaive(stack1, stack2)
     end_time = time.time()
 
-    #printStack(stack1)
-    print(checkSorting(stack1))
+    #printStack(stack2)
+    print(checkSorting(stack2))
 
     execution_time = end_time - start_time 
     print(f"Execution time: {execution_time} seconds") 
@@ -67,7 +67,7 @@ def testRandom(size):
 
 def main():
     # Runs tests
-    size = 1000
+    size = 10000
     
     print("Best case")
     testBestCase(size)

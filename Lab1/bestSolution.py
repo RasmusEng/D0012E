@@ -18,9 +18,6 @@ def SimpleNaive(stack1: Stack, stack2: Stack):
                 break
 
         stack2.push(temp)
-    
-    while not stack2.isEmpty():
-        stack1.push(stack2.pop())
 
 def main():
     # Just for testing
