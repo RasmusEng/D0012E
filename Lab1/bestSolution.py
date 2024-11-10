@@ -11,7 +11,7 @@ def SimpleNaive(stack1: Stack, stack2: Stack):
         while not stack2.isEmpty():
             top = stack2.pop()
             
-            if top > temp:
+            if top < temp:
                 stack1.push(top)  
             else:
                 stack2.push(top)
@@ -43,7 +43,6 @@ def main():
     
     execution_time = end_time - start_time 
     print(f"Execution time: {execution_time} seconds") 
-
 
 if __name__ == "__main__":
     main()

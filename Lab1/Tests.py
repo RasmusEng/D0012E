@@ -20,7 +20,7 @@ def checkSorting(stack: Stack):
     while current:
         elements.append(current.data)
         current = current.next
-    if elements == sorted(elements):
+    if elements == sorted(elements, reverse=True):
         return "The stack is sorted"
     return "The stack is NOT sorted"
 
@@ -39,20 +39,20 @@ def runTest(stack1, stack2):
     print(f"Execution time: {execution_time} seconds") 
 
 def testBestCase(size):
-    # Generates test data for the Best case of size: size
-    stack1 = Stack.Stack()
-    stack2 = Stack.Stack()
-    for i in range(0, size):
-        stack1.push(size-i)
-
-    runTest(stack1, stack2)
-
-def testWorstCase(size):
-    # Generates test data for the worst case of size: size
+    # Generates test data for the best case of size: size
     stack1 = Stack.Stack()
     stack2 = Stack.Stack()
     for i in range(1, size+1):
         stack1.push(i)
+
+    runTest(stack1, stack2) 
+    
+def testWorstCase(size):
+    # Generates test data for the worst case of size: size
+    stack1 = Stack.Stack()
+    stack2 = Stack.Stack()
+    for i in range(0, size):
+        stack1.push(size-i)
 
     runTest(stack1, stack2)
 
@@ -67,10 +67,19 @@ def testRandom(size):
 
 def main():
     # Runs tests
-    size = 10000
+    size = 1000
+    
+    print("Best case")
     testBestCase(size)
+    print()
+    
+    print("Worst case")
     testWorstCase(size)
+    print()
+    
+    print("Random case")
     testRandom(size)
+    print()
 
 if __name__ == "__main__":
     main()
