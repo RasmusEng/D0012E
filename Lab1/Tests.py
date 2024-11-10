@@ -46,6 +46,7 @@ def testBestCase(size):
         stack1.push(size-i)
 
     runTest(stack1, stack2)
+
 def testWorstCase(size):
     # Generates test data for the worst case of size: size
     stack1 = Stack.Stack()

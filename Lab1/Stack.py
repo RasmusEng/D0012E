@@ -1,6 +1,7 @@
 class Stack:
     class Node:
         def __init__(self, data):
+            # Constructor for node, sets variables of node
             self.data = data
             self.next = None
             self.prev = None
