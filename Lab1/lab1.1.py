@@ -28,10 +28,10 @@ class Stack:
     def isEmpty(self):
         # Return true if stack is empty
         return self.head is None
-    
 
-    
-def SimpleNaive(stack1, stack2):
+
+
+def SimpleNaive(stack1: Stack, stack2: Stack):
     # Sorts elements from stack1 into stack2 in ascending order
     while not stack1.isEmpty():
         temp = stack1.pop()
@@ -46,8 +46,12 @@ def SimpleNaive(stack1, stack2):
                 break
 
         stack2.push(temp)
-        
-def countStack(stack):
+    
+    while not stack2.isEmpty():
+        stack1.push(stack2.pop())
+
+
+def countStack(stack: Stack):
     # Count the elements in the stack
     current = stack.head
     n = 0
@@ -56,14 +60,8 @@ def countStack(stack):
         n += 1
     return n
 
-def startSort(stack1, stack2):
-    # Start the sorting
-    SimpleNaive(stack1, stack2)
-    
-    while not stack2.isEmpty():
-        stack1.push(stack2.pop())
-        
-def printStack(stack):
+
+def printStack(stack: Stack):
     # Print out the stack
     elements = []
     current = stack.head
@@ -71,9 +69,10 @@ def printStack(stack):
         elements.append(current.data)
         current = current.next
     print(" -> ".join(map(str, elements)))
-    print("-"*100)
-        
-def testStack(stack):
+    print("=="*70)
+
+
+def testStack(stack: Stack):
     # Test if the stack is sorted
     elements = []
     current = stack.head
@@ -81,22 +80,23 @@ def testStack(stack):
         elements.append(current.data)
         current = current.next
     if elements == sorted(elements):
-        return True
-    return False
+        return "The stack is sorted"
+    return "The stack is NOT sorted"
+
 
 def main():
     # Just for testing
     stack1 = Stack()
     stack2 = Stack()
     
-    # Add elements to stack1
-    for i in range(0, 10000):
+    # Add random integers to stack1
+    for i in range(0, 1000):
         stack1.push(random.randint(1,100))
     
-    printStack(stack1)
+    printStack(stack1) 
     
     start_time = time.time() 
-    startSort(stack1, stack2)
+    SimpleNaive(stack1, stack2)
     end_time = time.time()
     
     printStack(stack1) 
