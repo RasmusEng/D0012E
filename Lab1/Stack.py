@@ -4,7 +4,6 @@ class Stack:
             # Constructor for node, sets variables of node
             self.data = data
             self.next = None
-            self.prev = None
         
     def __init__(self):
         # Constructor for the stack, creates the head of the stack
