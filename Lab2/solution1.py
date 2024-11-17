@@ -4,26 +4,25 @@ def makeRandomArray(n: int, lowest =-10, highest =10):
     """ Makes an array n long with random ints between lowest and highest """
     return [r.randint(lowest, highest) for _ in range(n)]
 
-def divideAndConquer(array, max = None):
-    arrayLength = len(array)
+def maxSubSum(array, lower, higher, arrayLength):
+    
+
+
+def divideAndConquer(array, low, higher):
     """ Assumes that array is 1 element or lager """
-    if arrayLength == 1:
+    if higher == 1:
         return array[0]
     
-    middle = arrayLength // 2
-    print(array[:middle])
-    left = divideAndConquer(array[:middle])
-    print(array[middle:])
-    right = divideAndConquer(array[middle:])
+    middle = higher+1 // 2
+    
+    left = divideAndConquer(array, low, middle, higher)
 
-    if left + right >= left or right:
-        return left + right
-    else:
-        return left if left > right else right
+    right = divideAndConquer(array, middle, higher higher)
 
 
 if __name__ == '__main__':
-    #arr = makeRandomArray(10)
+    # Arr = makeRandomArray(10)
     arr = [7, -5, 2, 6, -1]
     print(arr)
-    print(divideAndConquer(arr))
+    # Send in index
+    print(divideAndConquer(arr, 0, len(arr)-1))
