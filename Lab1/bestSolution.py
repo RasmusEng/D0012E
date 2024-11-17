@@ -5,19 +5,22 @@ import Tests
 
 def SimpleNaive(stack1: Stack, stack2: Stack):
     # Sorts elements from stack1 into stack2 in ascending order
+    operation_count = 0
     while not stack1.isEmpty():
         temp = stack1.pop()
-        
+        operation_count += 1 
         while not stack2.isEmpty():
             top = stack2.pop()
-            
+            operation_count += 1 
             if top < temp:
-                stack1.push(top)  
+                operation_count += 1 
+                stack1.push(top)
             else:
                 stack2.push(top)
+                operation_count += 1 
                 break
-
         stack2.push(temp)
+    print(operation_count)
 
 def main():
     # Just for testing

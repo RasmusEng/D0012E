@@ -67,19 +67,15 @@ def testRandom(size):
 
 def main():
     # Runs tests
-    size = 10000
-    
-    print("Best case")
-    testBestCase(size)
-    print()
-    
     print("Worst case")
-    testWorstCase(size)
+    testWorstCase(1000)
     print()
     
-    print("Random case")
-    testRandom(size)
-    print()
+    #for i in range(0, 16):
+            
+    #    print("Best case: {}", 2**i)
+    #    testBestCase(2**i)
+    #    print()
 
 if __name__ == "__main__":
     main()
