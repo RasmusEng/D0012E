@@ -4,6 +4,7 @@ import time
 
 import solution1 as s1
 import potato as s2
+import potato1 as s25
 import rasmustest as s3
 
 def makeRandomArray(n: int, lowest =-10, highest =10):
@@ -14,7 +15,6 @@ def test(result, array):
     if max(accumulate(array, lambda x, y: max(y, x + y))) == result:
         return True
     return False
-
 
 def main():
     arr = makeRandomArray(100000)
@@ -32,11 +32,17 @@ def main():
     print(test(res[0], arr))
 
     start_time = time.time()
+    res = s25.maxiSubbyArray(arr, 0, len(arr)-1)
+    end_time = time.time()
+    print(end_time - start_time)
+    print(test(res[0], arr))
+
+    start_time = time.time()
     res = s3.maxSubArray(arr, 0, len(arr)-1)
     end_time = time.time()
     print(end_time - start_time)
 
-    print(test(res, arr))
+    print(test(res["max_sum"], arr))
 
 
 if __name__ == '__main__':
