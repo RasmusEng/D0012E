@@ -129,13 +129,9 @@ class BST:
 
             return build_balanced_tree(0, len(elements) - 1)
     
-    def display(self):
+    def display(self, head):
         """ Generate and render the BST visualization """
-        dot = self.create_graph(self.head)
-        dot.render('bst_tree', format='png', cleanup=True)
 
-        
-            
         def create_graph(self, node):
             """Create a Graphviz object from the BST, treating duplicates as separate nodes."""
             dot = Digraph()
@@ -170,3 +166,6 @@ class BST:
             assign_unique_labels(self.head)
             add_edges(self.head)
             return dot
+        
+        dot = create_graph(self, head)
+        dot.render('bst_tree', format='png', cleanup=True)
