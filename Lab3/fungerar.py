@@ -47,10 +47,19 @@ class BST:
         right_size = node.right.size if node.right else 0
         return abs(left_size - right_size) <= self.C
 
+    def isBalanced(self, node):
+        if node.left:
+            if node.left.size + 1 > node.size * self.C:
+                return False
+        if node.right:
+            if node.right.size + 1 > node.size * self.C:
+                return False
+        return True
+
     def checkBalance(self, node): 
         """Check and rebalance the subtree rooted at 'node'."""
         while node:
-            if not self.getBalance(node):
+            if not self.isBalanced(node):
                 balanced_subtree = self.balanceTree2(node)
                 if node == self.head:
                     self.head = balanced_subtree

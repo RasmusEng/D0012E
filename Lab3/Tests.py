@@ -51,9 +51,12 @@ def testBBSTGraph(c, nodes, low = -2000, high = 2000):
     left_size, right_size = bst.head_subtree_sizes()
     print(f"Left subtree size: {left_size}, Right subtree size: {right_size}")
 
+    bst.display()
+
     
 def main():
-    testBBSTGraph(10000, 1000)
+    testBBSTGraph(0.1, 1000)
+
 
 if __name__ == '__main__':
     main()
