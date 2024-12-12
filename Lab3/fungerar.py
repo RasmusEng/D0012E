@@ -8,6 +8,15 @@ class BST:
         self.head = None
         self.C = C
     
+    def head_subtree_sizes(self):
+        """Return the sizes of the left and right subtrees of the head node."""
+        if self.isEmpty():
+            return "The tree is empty."
+        
+        left_size = self.head.left.size + 1 if self.head.left else 0
+        right_size = self.head.right.size + 1 if self.head.right else 0
+        return left_size, right_size
+    
     def isEmpty(self):
         """Return if BST is empty"""
         return self.head is None
