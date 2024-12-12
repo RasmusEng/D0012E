@@ -129,7 +129,7 @@ class BST:
 
             return build_balanced_tree(0, len(elements) - 1)
     
-    def display(self, head):
+    def display(self):
         """ Generate and render the BST visualization """
 
         def create_graph(self, node):
@@ -167,5 +167,5 @@ class BST:
             add_edges(self.head)
             return dot
         
-        dot = create_graph(self, head)
+        dot = create_graph(self, self.head)
         dot.render('bst_tree', format='png', cleanup=True)
