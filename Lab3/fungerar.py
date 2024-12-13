@@ -21,10 +21,6 @@ class BST:
         """Return if BST is empty"""
         return self.head is None
     
-    def size(self):
-        """Return size of BST"""
-        return self.head.size +1
-    
     def lookUp(self, data, node):
         """Checks if data is in BST"""
         if data == node.data:
@@ -37,15 +33,6 @@ class BST:
             if node.left == None:
                 return False
             return self.lookUp(data, node.left)
-
-    def getBalance(self, node) -> bool:
-        """Returns True if BST is balanced according to lab instructions"""
-        if node is None:
-            return True
-    
-        left_size  = node.left.size if node.left else 0
-        right_size = node.right.size if node.right else 0
-        return abs(left_size - right_size) <= self.C
 
     def isBalanced(self, node):
         if node.left:
