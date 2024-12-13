@@ -3,152 +3,165 @@ from graphviz import Digraph
 from random import randint
 
 class BST:
-        def __init__(self):
-            self.head = None
+    def __init__(self, C):
+        """Constructor for BST"""
+        self.head = None
+        self.C = C
+    
+    def head_subtree_sizes(self):
+        """Return the sizes of the left and right subtrees of the head node."""
+        if self.isEmpty():
+            return "The tree is empty."
         
-        def isEmpty(self):
-            return self.head is None
+        left_size = self.head.left.size + 1 if self.head.left else 0
+        right_size = self.head.right.size + 1 if self.head.right else 0
+        return left_size, right_size
+    
+    def isEmpty(self):
+        """Return if BST is empty"""
+        return self.head is None
+    
+    def lookUp(self, data, node):
+        """Checks if data is in BST"""
+        if data == node.data:
+            return True
+        if data > node.data:
+            if node.right == None:
+                return False
+            return self.lookUp(data, node.right)
+        else:
+            if node.left == None:
+                return False
+            return self.lookUp(data, node.left)
+
+    def isBalanced(self, node):
+        if node.left:
+            if node.left.size + 1 > node.size * self.C:
+                return False
+        if node.right:
+            if node.right.size + 1 > node.size * self.C:
+                return False
+        return True
+
+    def checkBalance(self, node): 
+        """Check and rebalance the subtree rooted at 'node'."""
+        while node:
+            if not self.isBalanced(node):
+                balanced_subtree = self.balanceTree2(node)
+                if node == self.head:
+                    self.head = balanced_subtree
+                else:
+                    parent = node.parent
+                    if parent.left == node:
+                        parent.left = balanced_subtree
+                    else:
+                        parent.right = balanced_subtree
+                    balanced_subtree.parent = parent
+            node = node.parent
+    
+    def insert(self, data): 
+        """Inserts new element on correct spot"""
+        if self.isEmpty():
+            self.head = Node.Node(data)
+            return "Inserted"
+        if self.lookUp(data, self.head):
+            return "Data already exist"
         
-        def getBalance(self, node):
-            """Calculate the balance factor of a node."""
-            if node is None:
-                return 0
-            left_height = node.left.height if node.left else 0
-            right_height = node.right.height if node.right else 0
-            return left_height - right_height
+        current = self.head
+        while current:
+            # Traverse and find leaf
+            current.size += 1
+            if data < current.data:
+                if current.left is None:
+                    current.left = Node.Node(data)
+                    current.left.parent = current
+                    self.checkBalance(current)
+                    return
+                current = current.left
+            else: # Dubletter sätts in till höger
+                if current.right is None:
+                    current.right = Node.Node(data)
+                    current.right.parent = current
+                    self.checkBalance(current)
+                    return
+                current = current.right
+
+    def inOrderWalk(self, node : Node):
+        """"Uses inorderwalk to create a list representing the tree"""
+        list = []
+        if node.left:
+            list += self.inOrderWalk(node.left)
+        list.append(node.data)
+        if node.right:
+            list += self.inOrderWalk(node.right)
         
-        def isBalanced(self):
-            """Returns True if the tree is balanced, False otherwise."""
-            def check_balance(node):
-                if node is None:
-                    return 0
-                
-                left_height = check_balance(node.left)
-                if left_height == -1:  # Left subtree is unbalanced
-                    return -1
-                
-                right_height = check_balance(node.right)
-                if right_height == -1:  # Right subtree is unbalanced
-                    return -1
-                
-                balance_factor = self.getBalance(node)
-                if abs(balance_factor) > 1:  # Unbalanced node
-                    return -1
-                
-                return max(left_height, right_height) + 1  # Return height
+        return list
+    
+    def balanceTree2(self, node):
+            """Rebalance the subtree rooted at 'node' using a divide and conquer"""
+            elements = self.inOrderWalk(node)
 
-            # Start from the root
-            return check_balance(self.head) != -1
+            def build_balanced_tree(start, end):
+                if start > end:
+                    return None
+                mid = (start + end) // 2
+                root = Node.Node(elements[mid])
+                root.left = build_balanced_tree(start, mid - 1)
+                root.right = build_balanced_tree(mid + 1, end)
 
-        def updateHeight(self, node):
-            if node is not None:
-                left_height = node.left.height if node.left else 0
-                right_height = node.right.height if node.right else 0
-                node.height = 1 + max(left_height, right_height)
+                left_size = root.left.size if root.left else 0
+                right_size = root.right.size if root.right else 0
+                if root.left and root.right:
+                    root.size = 2 + left_size + right_size
+                elif root.left or root.right:
+                    root.size = 1 + max(left_size, right_size)
+                else:
+                    root.size = 0
+                if root.left:
+                    root.left.parent = root
+                if root.right:
+                    root.right.parent = root
+                return root
 
-        def insert(self, data): 
-            # Inserts new element on correct spot
-            if self.isEmpty():
-                self.head = Node.Node(data)
-                return
-            
-            # Normal insert
-            previous = None
-            current = self.head
+            return build_balanced_tree(0, len(elements) - 1)
+    
+    def display(self):
+        """ Generate and render the BST visualization """
 
-            while current:
-                # Traverse and find leaf
-                previous = current
-                if data < current.data:
-                    if current.left is None:
-                        current.left = Node.Node(data)
-                        current.left.parent = current
-                        break
-                    current = current.left
-                else: # Dubletter sätts in till höger
-                    if current.right is None:
-                        current.right = Node.Node(data)
-                        current.right.parent = current
-                        break
-                    current = current.right
-            
-            if not self.isBalanced():
-                # Collect the nodes in sorted order (in-order traversal)
-                balanced_tree= self.balanceTree()
-                self.head = balanced_tree.head
-            
-            """ newNode = Node.Node(data)
-            newNode.parent = previous """
-            """             
-            if data < previous.data:
-                previous.left = newNode
-            else:
-                previous.right = newNode """
-            
-            node = current
-            while node:
-                self.updateHeight(node)
-                node = node.parent
-
-        def inOrderWalk(self, leaf : Node):
-            list = []
-            
-            if leaf.left:
-                list += self.inOrderWalk(leaf.left)
-            list.append(leaf.data)
-            if leaf.right:
-                list += self.inOrderWalk(leaf.right)
-            
-            return list 
-        
-        def balanceTree(self):
-            list = self.inOrderWalk(self.head)
-            balanced = BST()
-            
-            mid = len(list)//2
-            balanced.insert(list[mid])
-            # Insert the left part
-            for i in range(mid - 1, -1, -1):
-                balanced.insert(list[i])
-
-            # Insert the right part
-            for i in range(mid + 1, len(list)):
-                balanced.insert(list[i])
-        
-            return balanced
-        
         def create_graph(self, node):
-            """ Create a graphviz object from the BST, including duplicates """
+            """Create a Graphviz object from the BST, treating duplicates as separate nodes."""
             dot = Digraph()
-        
+            unique_counter = {}  # To assign unique labels to duplicate nodes
+
             def add_edges(node):
                 if node:
-                    if node.left:
-                        dot.node(str(node.left.data))  # Add left child
-                        dot.edge(str(node.data), str(node.left.data))  # Create edge
-                        add_edges(node.left)
-                    if node.right:
-                        dot.node(str(node.right.data))  # Add right child
-                        dot.edge(str(node.data), str(node.right.data))  # Create edge
-                        add_edges(node.right)
-            
-            dot.node(str(node.data))  # Add root node
-            add_edges(node)
-            return dot
+                    # Generate a unique label for the current node
+                    unique_label = f"{node.data}_{unique_counter[node]}"
+                    dot.node(unique_label, label=f"{node.data} (size={node.size})")
 
-        def draw_graph(self):
-            """ Generate and render the BST visualization """
-            dot = self.create_graph(self.head)
-            dot.render('bst_tree', format='png', cleanup=True)  # Output as PNG image
+                    if node.left:
+                        left_label = f"{node.left.data}_{unique_counter[node.left]}"
+                        dot.node(left_label, label=f"{node.left.data} (size={node.left.size})")  # Add the left child node
+                        dot.edge(unique_label, left_label)  # Create an edge to the left child
+                        add_edges(node.left)
+
+                    if node.right:
+                        right_label = f"{node.right.data}_{unique_counter[node.right]}"
+                        dot.node(right_label, label=f"{node.right.data} (size={node.right.size})")  # Add the right child node
+                        dot.edge(unique_label, right_label)  # Create an edge to the right child
+                        add_edges(node.right)
+
+            def assign_unique_labels(node):
+                """Assign a unique index to every node for differentiation."""
+                if node:
+                    unique_counter[node] = unique_counter.get(node, len(unique_counter))
+                    assign_unique_labels(node.left)
+                    assign_unique_labels(node.right)
+
+            # Assign unique labels to all nodes in the tree
+            assign_unique_labels(self.head)
+            add_edges(self.head)
+            return dot
         
-            
-if __name__ == "__main__":
-    bst = BST()
-    high = 100
-    low = -100
-    for i in range(1, 20):
-        randomInt = randint(low, high)
-        bst.insert(randomInt)
-    
-    bst.draw_graph()
-    
+        dot = create_graph(self, self.head)
+        dot.render('bst_tree', format='png', cleanup=True)
