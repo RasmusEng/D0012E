@@ -1,8 +1,6 @@
-import BST
-import Node
 import time
 from random import randint, seed
-import fungerar as b
+import BST as b
 import matplotlib.pyplot as plt
 
 def testBBSTGraph(c, nodes, low = -1500, high = 1500):
